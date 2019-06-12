@@ -38,36 +38,25 @@ def process_log_file(cur, filepath):
 
     # filter by NextSong action
     df = df[df['page'] == 'NextSong']
-    # convert timestamp column to datetime
-    df['ts'] = pd.to_datetime(df['ts'], unit='ms')
-    
-    # insert time data records
-    time_data = [df['ts'], df['ts'].dt.hour, df['ts'].dt.day,
-                 df['ts'].dt.weekofyear, df['ts'].dt.month,
-                 df['ts'].dt.year,df['ts'].dt.weekday]
-    column_labels = ['ts', 'hour', 'day', 'week of year', 'month', 'year', 'weekday']
-    
-    assert isinstance(time_data, list), 'time_data should be a list'
-    assert isinstance(column_labels, list), 'column_labels should be a list'
 
+    # convert timestamp column to datetime
+    t=pd.to_datetime(df['ts'], unit='ms')
+    
+    # insert time data records to dataframe 
+    time_data = [t, t.dt.hour, t.dt.day, t.dt.weekofyear, t.dt.month, t.dt.year,t.dt.weekday]
+    column_labels = ['start_time', 'hour', 'day', 'week', 'month', 'year', 'weekday']
 
     dictionary = dict(zip(column_labels, time_data))
     time_df = pd.DataFrame.from_dict(dictionary)
-    assert isinstance(time_df, pd.DataFrame), 'time_df should be a dataframe'
-    
+
     
     for i, row in time_df.iterrows():
-        # check for start_time duplicates
-        cur.execute(time_select, [row.ts])
-        results = cur.fetchone()
-        
-        if results[0] == 0: 
-            cur.execute(time_table_insert, list(row))
+    cur.execute(time_table_insert, list(row))
         
 
     # load user table
     user_df = df[['userId', 'firstName', 'lastName', 'gender', 'level']]
-    
+
     # insert user records
     for i, row in user_df.iterrows():
         # check for user_id duplicates

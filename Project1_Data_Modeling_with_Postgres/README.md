@@ -44,8 +44,8 @@ it contains foreign keys to four tables;
 --------------------------------------------
 
 #### How to run
-First of all, istall PostgresSQL (pgAdmin4) <br>
-[Link:](https://www.postgresql.org/download/) for you preferred operating s <br>
+First of all, install PostgresSQL (pgAdmin4) <br>
+[Link:](https://www.postgresql.org/download/) for you preferred operating system <br>
 
 Install Python [Python](https://www.python.org/downloads/) <br>
 
