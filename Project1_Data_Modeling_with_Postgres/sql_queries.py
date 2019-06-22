@@ -8,7 +8,7 @@ time_table_drop = "DROP TABLE IF EXISTS time"
 
 # CREATE TABLES
 songplay_table_create = ("""CREATE TABLE songplays(
-songplay_id SERIAL,
+songplay_id SERIAL NOT NULL,
 start_time TIMESTAMP REFERENCES time(start_time),
 user_id VARCHAR(50) REFERENCES users(user_id),
 level VARCHAR(50),
@@ -21,26 +21,26 @@ PRIMARY KEY (songplay_id))
 """)
 
 user_table_create = ("""CREATE TABLE users(
-user_id VARCHAR,
-firstName VARCHAR(255),
-lastName VARCHAR(255),
+user_id VARCHAR NOT NULL,
+firstName VARCHAR(255) NOT NULL,
+lastName VARCHAR(255) NOT NULL,
 gender VARCHAR(1),
 level VARCHAR(50),
 PRIMARY KEY (user_id))
 """)
 
 song_table_create = ("""CREATE TABLE songs(
-song_id VARCHAR(100),
-title VARCHAR(255),
-artist_id VARCHAR(100),
+song_id VARCHAR(100) NOT NULL,
+title VARCHAR(255) NOT NULL,
+artist_id VARCHAR(100) NOT NULL,
 year INTEGER,
 duration DOUBLE PRECISION,
 PRIMARY KEY (song_id))
 """)
 
 artist_table_create = ("""CREATE TABLE artists(
-artist_id VARCHAR(100),
-name VARCHAR(255),
+artist_id VARCHAR(100) NOT NULL,
+name VARCHAR(255) NOT NULL,
 location VARCHAR(255),
 latitude DOUBLE PRECISION,
 longitude DOUBLE PRECISION,
