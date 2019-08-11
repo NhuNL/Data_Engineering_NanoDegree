@@ -33,11 +33,10 @@ staging_events_table_create= ("""CREATE TABLE staging_events(
     registration VARCHAR(50),	
     sessionId	BIGINT,
     song VARCHAR(255),
-    status INTEGER,  -- SHOULD BE ALWAYS A NUMBER, HTTP STATUS	
+    status INTEGER,  
     ts VARCHAR(50),
     userAgent TEXT,	
-    userId VARCHAR(100),
-    PRIMARY KEY (event_id))
+    userId VARCHAR(100)
 """)
 
 staging_songs_table_create = ("""CREATE TABLE staging_songs(
@@ -50,8 +49,7 @@ staging_songs_table_create = ("""CREATE TABLE staging_songs(
     artist_name VARCHAR(255),
     title VARCHAR(255),
     duration DOUBLE PRECISION,
-    year INTEGER,
-    PRIMARY KEY (song_id))
+    year INTEGER
 """)
 
 songplay_table_create = ("""CREATE TABLE songplays(
@@ -144,6 +142,8 @@ songplay_table_insert = ("""INSERT INTO songplays (start_time, userId, level, so
     FROM staging_events e, staging_songs s
     WHERE e.page = 'NextSong'
     AND e.song = s.title
+    AND e.length = e.duration
+    AND e.artist = s.artist_name
     AND userId NOT IN (SELECT DISTINCT s.userId FROM songplays s WHERE s.userId = userId
                        AND s.start_time = start_time AND s.sessionId = sessionId )
 """)
@@ -160,7 +160,7 @@ user_table_insert = ("""NSERT INTO users (userId, firstName, lastName, gender, l
     AND userId NOT IN (SELECT DISTINCT userId FROM users)
 """)
 
-song_table_insert = ("""INSERT INTO songs (song_id, title, artist_id, year, duration) 
+song_table_insert = ("""INSERT INTO songs (song_id, title, artist_id, year, duration)                       
     SELECT DISTINCT 
         song_id, 
         title,
