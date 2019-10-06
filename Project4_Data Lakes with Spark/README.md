@@ -2,7 +2,7 @@
 ## Build an ETL pipeline for a data lake hosted on S3 using Apache Spark
 
 ## Summary
-* [Concept]
+* [Concept] (#Concept)
 * [Spark process](#Spark-process)
 * [Project structure](#Project-structure)
 
